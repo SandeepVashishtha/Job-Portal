@@ -26,7 +26,7 @@ jobs:
           cd backend  # Navigate to the backend folder
           npm install
           npm run build --if-present
-          npm run test --if-present
+          # npm run test --if-present  # Commented out since there are no tests
 
       - name: Zip artifact for deployment
         run: zip release.zip ./backend/* -r  # Only zip the backend folder
@@ -44,7 +44,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write  # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -69,3 +69,8 @@ jobs:
           app-name: 'Job-Portal-Backend'
           slot-name: 'Production'
           package: ./backend  # Deploy only the backend folder
+
+      - name: Start the Node.js app on Azure Web App
+        run: |
+          az webapp config appsettings set --name 'Job-Portal-Backend' --resource-group 'your-resource-group' --settings WEBSITES_PORT=3000
+          az webapp restart --name 'Job-Portal-Backend' --resource-group 'your-resource-group'
