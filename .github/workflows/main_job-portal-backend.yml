@@ -72,5 +72,5 @@ jobs:
 
       - name: Start the Node.js app on Azure Web App
         run: |
-          az webapp config appsettings set --name 'Job-Portal-Backend' --resource-group 'your-resource-group' --settings WEBSITES_PORT=3000
-          az webapp restart --name 'Job-Portal-Backend' --resource-group 'your-resource-group'
+          az webapp config appsettings set --name 'Job-Portal-Backend' --resource-group 'Web-App' --settings WEBSITES_PORT=3000
+          az webapp restart --name 'Job-Portal-Backend' --resource-group 'Web-App'
